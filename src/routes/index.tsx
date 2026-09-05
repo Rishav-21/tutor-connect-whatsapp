@@ -60,7 +60,10 @@ function Index() {
 
   const waLink = useMemo(() => {
     if (!isValid) return "#";
-    return `https://wa.me/${normalized}?text=${encodeURIComponent(message)}`;
+    const url = new URL("https://api.whatsapp.com/send");
+    url.searchParams.set("phone", normalized);
+    url.searchParams.set("text", message);
+    return url.toString();
   }, [normalized, message, isValid]);
 
   const handleSend = () => {
